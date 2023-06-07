@@ -5,7 +5,7 @@
   },
   "porsche": {
     "modelo": "911",
-    "asientos": 2
+    "asientos": "15"
   },
   "lamborghini": {
     "modelo": "murcielago",

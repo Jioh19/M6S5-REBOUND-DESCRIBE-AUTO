@@ -1,14 +1,15 @@
 {
-	"ferrari": {
-		"modelo": "F40",
-		"asientos": 2
-	},
-	"porsche": {
-		"modelo": "911",
-		"asientos": 2
-	},
-	"lamborghini": {
-		"modelo": "murcielago",
-		"asientos": 2
-	}
+  "ferrari": {
+    "modelo": "F40",
+    "asientos": 2
+  },
+  "porsche": {
+    "modelo": "911",
+    "asientos": "2",
+    "color": "verde"
+  },
+  "lamborghini": {
+    "modelo": "murcielago",
+    "asientos": 2
+  }
 }

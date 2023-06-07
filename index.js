@@ -5,11 +5,20 @@ let objetoDatos = {};
 
 const leerArchivo = async () => {
 	try {
-		const autos = await fs.readFile("autos.json");
+		let autos = await fs.readFile("autos.json");
 		if (autos.length == 0) {
-			return console.log("El archive se encuentra vacio");
+			return console.log("El archivo se encuentra vacio");
 		}
-		console.log(JSON.parse(autos));
+		autos = JSON.parse(autos);
+		if (args[1] !== undefined) {
+			for (let auto in autos) {
+				if (auto == args[1]) {
+					console.log(autos[auto]);
+				}
+			}
+		} else {
+			console.log(autos);
+		}
 	} catch (error) {
 		console.log("Lo sentimos, ha ocurrido un error");
 		console.log(error);
@@ -17,14 +26,34 @@ const leerArchivo = async () => {
 };
 
 const escribirDatos = async () => {
+	if (args.length == 1) {
+		console.log("Ingrese más parámetros")
+		return;
+	}
 	try {
-		const datos = await fs.readFile("autos.json");
-		if (datos.length !== 0) {
-			objetoDatos = JSON.parse(datos);
+		let autos = await fs.readFile("autos.json");
+		let nuevoObjeto;
+		if (autos.length !== 0) {
+			autos = JSON.parse(autos);
 		}
-		const nuevoObjeto = { ...objetoDatos};
-		await fs.writeFile("datos.txt", JSON.stringify(nuevoObjeto, null, 2));
-		console.log("Los datos hsn sido agregados exitosamente");
+		for (let auto in autos) {
+			if (auto == args[0]) {
+				for (let propiedad in autos[auto]) {
+					if (propiedad == args[1]) {
+						autos[auto][propiedad] = args[2];
+						nuevoObjeto = autos;
+						console.log(`Propiedad ${args[1]} del auto ${args[0]} ha sido modificada a ${args[2]}`);
+					}
+				}
+				if (nuevoObjeto == undefined) {
+					autos[auto] = { ...autos[auto], [args[1]]: args[2] };
+					console.log(`Propiedad ${args[1]} del auto ${args[0]} ha sido agregada a ${args[2]}`);
+				}
+			}
+		}
+		//console.log(autos);
+		await fs.writeFile("autos.json", JSON.stringify(autos, null, 2));
+		console.log("Los datos han sido agregados exitosamente");
 	} catch (error) {
 		console.log("Lo sentimos, ha ocurrido un error");
 		console.log(error);
